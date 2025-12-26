@@ -1,59 +1,253 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# PHP_Laravel12_Login_Using_Microsoft_Account
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Project Overview
 
-## About Laravel
+A complete Laravel 12 application with Microsoft OAuth2 authentication integration. This project demonstrates how to implement Single Sign-On (SSO) using Microsoft accounts with a clean and simple structure suitable for learning, interviews, and real-world use.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* Microsoft OAuth2 authentication
+* User registration and profile synchronization
+* Session-based login and logout
+* Dashboard displaying user information
+* Error handling and validation
+* Clean MVC architecture
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Prerequisites
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### System Requirements
 
-## Laravel Sponsors
+* PHP 8.1 or higher
+* Composer 2.0 or higher
+* Laravel 12
+* MySQL 5.7+ or MariaDB 10.3+
+* Node.js (optional, for frontend assets)
+* Git
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Required PHP Extensions
 
-### Premium Partners
+* BCMath
+* Ctype
+* cURL
+* DOM
+* Fileinfo
+* JSON
+* Mbstring
+* OpenSSL
+* PCRE
+* PDO
+* Tokenizer
+* XML
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## Installation Guide
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Step 1: Clone the Repository
 
-## Code of Conduct
+```bash
+git clone https://github.com/yourusername/laravel-microsoft-login.git
+cd laravel-microsoft-login
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Step 2: Install PHP Dependencies
 
-## Security Vulnerabilities
+```bash
+composer install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Step 3: Configure Environment
 
-## License
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Step 4: Database Setup
+
+Create a database:
+
+```sql
+CREATE DATABASE microsoft_login CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+Update `.env` file:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=microsoft_login
+DB_USERNAME=root
+DB_PASSWORD=your_password
+```
+
+Run migrations:
+
+```bash
+php artisan migrate
+```
+
+---
+
+## Microsoft Azure App Registration
+
+### 1. Register Application
+
+* Go to Azure Portal
+* Azure Active Directory → App registrations → New registration
+
+Application details:
+
+* Name: Laravel Microsoft Login
+* Supported account types: Accounts in any organizational directory and personal Microsoft accounts
+* Redirect URI (Web):
+
+  * [http://localhost:8000/auth/microsoft/callback](http://localhost:8000/auth/microsoft/callback)
+
+### 2. Create Client Secret
+
+* Go to Certificates & secrets
+* New client secret
+* Copy secret value immediately
+
+### 3. Authentication Configuration
+
+Add redirect URIs:
+
+* [http://localhost:8000/auth/microsoft/callback](http://localhost:8000/auth/microsoft/callback)
+* [https://yourdomain.com/auth/microsoft/callback](https://yourdomain.com/auth/microsoft/callback)
+
+Enable ID tokens
+
+### 4. API Permissions
+
+Add delegated permissions from Microsoft Graph:
+
+* email
+* offline_access
+* openid
+* profile
+* User.Read
+
+Grant admin consent
+
+---
+
+## Laravel Configuration
+
+Update `.env`:
+
+```env
+MICROSOFT_CLIENT_ID=your-client-id
+MICROSOFT_CLIENT_SECRET=your-client-secret
+MICROSOFT_REDIRECT_URI=http://localhost:8000/auth/microsoft/callback
+MICROSOFT_TENANT_ID=common
+```
+
+### config/services.php
+
+```php
+'microsoft' => [
+    'client_id' => env('MICROSOFT_CLIENT_ID'),
+    'client_secret' => env('MICROSOFT_CLIENT_SECRET'),
+    'redirect' => env('MICROSOFT_REDIRECT_URI'),
+    'tenant' => env('MICROSOFT_TENANT_ID', 'common'),
+],
+```
+
+---
+
+## Database Changes
+
+### User Table Updates
+
+```php
+Schema::table('users', function (Blueprint $table) {
+    $table->string('microsoft_id')->nullable()->unique();
+    $table->string('avatar')->nullable();
+    $table->timestamp('last_login_at')->nullable();
+    $table->string('timezone')->nullable();
+});
+```
+
+### User Model
+
+```php
+protected $fillable = [
+    'name',
+    'email',
+    'password',
+    'microsoft_id',
+    'avatar',
+    'timezone',
+    'last_login_at'
+];
+```
+
+---
+
+## Routes
+
+| Method | URI                      | Action          | Middleware |
+| ------ | ------------------------ | --------------- | ---------- |
+| GET    | /                        | Welcome Page    | guest      |
+| GET    | /auth/microsoft          | Microsoft Login | guest      |
+| GET    | /auth/microsoft/callback | OAuth Callback  | guest      |
+| GET    | /dashboard               | User Dashboard  | auth       |
+| POST   | /logout                  | Logout          | auth       |
+
+---
+
+## Project Structure
+
+```
+laravel-microsoft-login/
+├── app/
+│   ├── Http/Controllers/Auth/MicrosoftAuthController.php
+│   ├── Models/User.php
+├── config/services.php
+├── database/migrations/
+├── resources/views/
+│   ├── welcome.blade.php
+│   └── dashboard.blade.php
+├── routes/web.php
+├── .env.example
+└── composer.json
+```
+
+---
+
+## Run Application
+
+```bash
+php artisan serve
+```
+
+Visit:
+
+```
+http://localhost:8000
+```
+
+---
+
+## Future Enhancements
+
+* Role-based access control
+* Microsoft Graph advanced profile sync
+* Multi-provider login (Google, GitHub)
+* API-based authentication
+* Deployment configuration
+
+---
+
+## Author
+
+Mihir Mehta
+
+Laravel 12 Microsoft OAuth2 Authentication Project
