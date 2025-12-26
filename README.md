@@ -233,7 +233,12 @@ Visit:
 ```
 http://localhost:8000
 ```
+---
+## Screenshot
+<img width="996" height="654" alt="image" src="https://github.com/user-attachments/assets/300e1ce8-2414-4b9d-bd08-b0d7a9762e37" />
+<img width="816" height="878" alt="image" src="https://github.com/user-attachments/assets/8c23bae9-b112-4686-b91d-daf1cf574029" />
 
+---
 ---
 
 ## Future Enhancements
