@@ -16,6 +16,8 @@ class User extends Authenticatable
         'password',
         'microsoft_id',
         'avatar',
+        'timezone',
+        'last_synced_at'
     ];
 
     protected $hidden = [
@@ -27,4 +29,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function loginHistories()
+    {
+
+        return $this->hasMany(LoginHistory::class);
+    }
 }
