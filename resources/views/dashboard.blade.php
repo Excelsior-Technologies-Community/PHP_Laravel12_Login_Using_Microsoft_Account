@@ -106,6 +106,13 @@
 
             </a>
 
+            <a href="{{ route('login.history') }}"
+                class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg shadow">
+
+                Login Activity
+
+            </a>
+
         </div>
 
         <!-- Current User Information -->
@@ -220,41 +227,41 @@
 
                         @forelse($latestUsers as $user)
 
-                            <tr class="hover:bg-gray-50">
+                        <tr class="hover:bg-gray-50">
 
-                                <td class="px-6 py-4">
-                                    {{ $user->id }}
-                                </td>
+                            <td class="px-6 py-4">
+                                {{ $user->id }}
+                            </td>
 
-                                <td class="px-6 py-4 font-medium">
-                                    {{ $user->name }}
-                                </td>
+                            <td class="px-6 py-4 font-medium">
+                                {{ $user->name }}
+                            </td>
 
-                                <td class="px-6 py-4">
-                                    {{ $user->email }}
-                                </td>
+                            <td class="px-6 py-4">
+                                {{ $user->email }}
+                            </td>
 
-                                <td class="px-6 py-4">
-                                    {{ $user->microsoft_id ?? '-' }}
-                                </td>
+                            <td class="px-6 py-4">
+                                {{ $user->microsoft_id ?? '-' }}
+                            </td>
 
-                                <td class="px-6 py-4">
-                                    {{ $user->created_at->format('d M Y h:i A') }}
-                                </td>
+                            <td class="px-6 py-4">
+                                {{ $user->created_at->format('d M Y h:i A') }}
+                            </td>
 
-                            </tr>
+                        </tr>
 
                         @empty
 
-                            <tr>
+                        <tr>
 
-                                <td colspan="5" class="text-center py-8 text-gray-500">
+                            <td colspan="5" class="text-center py-8 text-gray-500">
 
-                                    No users found.
+                                No users found.
 
-                                </td>
+                            </td>
 
-                            </tr>
+                        </tr>
 
                         @endforelse
 

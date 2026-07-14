@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\MicrosoftAuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginHistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,16 @@ Route::get('/users', [UserController::class, 'index'])
 
 Route::delete('/users/{user}', [UserController::class, 'destroy'])
     ->name('users.destroy');
+
+/*
+|--------------------------------------------------------------------------
+| Login History
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/login-history', [LoginHistoryController::class, 'index'])
+    ->name('login.history');
+
 
 /*
 |--------------------------------------------------------------------------
